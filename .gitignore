@@ -1,3 +1,4 @@
 api/db.sqlite3
-api/auth_app/migrations
-api/data_app/migrations
+
+**/migrations
+**/__pycache__
