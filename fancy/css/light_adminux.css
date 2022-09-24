@@ -2288,9 +2288,9 @@ header.navbar-fixed {
 }
 
 .navbar-brand.imglogo {
-    height: 42px;
+    height: 32px;
     width: 166px;
-    background: url("../images/logo_header%2Bdark.png") no-repeat center left;
+    background: url("../images/Anomilator.png") no-repeat center left;
     background-size: auto 40px;
     margin-bottom: -5px;
     margin-top: -4px
@@ -8109,7 +8109,7 @@ ul.icons li i {
     }
 
     .navbar-brand.imglogo {
-        width: 46px
+        width: 46px;
     }
 
     .rtl-read header .sidebar-right {
