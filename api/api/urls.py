@@ -18,6 +18,7 @@ urlpatterns = [
     path('api/v1/', 
         include([
             path('auth/', include(('auth_app.urls', 'auth'), namespace='auth')),
+            path('data/', include(('data_app.urls', 'data'), namespace='data')),
             path('swagger/schema/', schema_view.with_ui('swagger', cache_timeout=0), name="swagger-schema")
         ])
     )
