@@ -6,6 +6,6 @@ def get_anomalies():
 
     # convert score to scale of 1-10
     for a in anomalies:
-        a['score'] = log(int(a['score']), 100)
+        a['score'] = ceil(log(int(a['score']), 100))
     
     return anomalies
