@@ -1,4 +1,4 @@
-﻿' Flow Duration', ' Idle Min', ' Idle Max', ' Total Fwd Packets',' Total Backward Packets', ' Total Length of Bwd Packets', Score
+﻿flow_duration,idle_min,idle_max,total_fwd_packets,total_bwd_packets,total_len_bwd_packets,score
 119302728,5024984,5024984,2685,1729,7556917,9.01561E+14
 3,0,0,2,0,0,2
 98277993,98300000,98300000,7,7,11595,1.13953E+12
