@@ -5,7 +5,7 @@ from api.utils import threat_utils
 
 
 class ThreatApi(generics.GenericAPIView):
-    permission_classes = (permissions.IsAuthenticated,) # TODO - add admin check later
+    permission_classes = (permissions.IsAuthenticated, permissions.IsAdminUser)
 
     def get(self, request, *args, **kwargs):
         threats = threat_utils.get_threats()

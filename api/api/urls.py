@@ -8,7 +8,7 @@ schema_view = swagger_get_schema_view(
     openapi.Info(
         title="Anomilator API",
         default_version='1.0.0',
-        description="api",
+        description="API for account and threat management",
     ),
     public=True,
 )
