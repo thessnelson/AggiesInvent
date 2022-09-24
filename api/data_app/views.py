@@ -5,7 +5,7 @@ from api.utils import threat_utils
 
 
 class ThreatApi(generics.GenericAPIView):
-    permission_classes = (permissions.IsAuthenticated, permissions.IsAdminUser)
+    # permission_classes = (permissions.IsAuthenticated, permissions.IsAdminUser) - commented for demo purposes
 
     def get(self, request, *args, **kwargs):
         anomalies = threat_utils.get_anomalies()
