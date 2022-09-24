@@ -1,37 +1,11 @@
-def get_threats():
-    threats = [
-        {
-            'flow_duration': 0,
-            'delta_idle': 0,
-            'ttl_fwd_packets': 0,
-            'ttl_back_packets': 0,
-            'ttl_len_back_packets': 0,
-            'score': 0
-        },
-        {
-            'flow_duration': 0,
-            'delta_idle': 0,
-            'ttl_fwd_packets': 0,
-            'ttl_back_packets': 0,
-            'ttl_len_back_packets': 0,
-            'score': 0
-        },
-        {
-            'flow_duration': 0,
-            'delta_idle': 0,
-            'ttl_fwd_packets': 0,
-            'ttl_back_packets': 0,
-            'ttl_len_back_packets': 0,
-            'score': 0
-        },
-        {
-            'flow_duration': 0,
-            'delta_idle': 0,
-            'ttl_fwd_packets': 0,
-            'ttl_back_packets': 0,
-            'ttl_len_back_packets': 0,
-            'score': 0
-        }
-    ]
+import pandas as pd
+from math import log, ceil
 
-    return threats
+def get_anomalies():
+    anomalies = pd.read_csv('./data/ExampleData.csv', header=0).to_dict('records')
+
+    # convert score to scale of 1-10
+    for a in anomalies:
+        a['score'] = ceil(log(a['score'], 100))
+    
+    return anomalies

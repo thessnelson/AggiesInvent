@@ -3,5 +3,5 @@ from django.urls import path, include
 from .views import ThreatApi
 
 urlpatterns = [
-    path('api/threats/', ThreatApi.as_view(), name='list-threats')
+    path('api/threat-data/', ThreatApi.as_view(), name='threat-data')
 ]

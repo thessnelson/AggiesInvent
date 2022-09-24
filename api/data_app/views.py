@@ -8,9 +8,9 @@ class ThreatApi(generics.GenericAPIView):
     permission_classes = (permissions.IsAuthenticated, permissions.IsAdminUser)
 
     def get(self, request, *args, **kwargs):
-        threats = threat_utils.get_threats()
+        anomalies = threat_utils.get_anomalies()
 
         return Response({
-            "threats": threats,
-            "message": "Threats retrieved successfully."
+            "anomalies": anomalies,
+            "message": "Anomalies retrieved successfully."
         })
