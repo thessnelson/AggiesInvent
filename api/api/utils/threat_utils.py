@@ -8,9 +8,9 @@ def get_anomalies():
     # convert score to scale of 1-10
     for a in anomalies:
         if a['score'] > 0:
-            a['score'] = ceil(log(a['score'], 100))
+            a['score'] = ceil(log(a['score'], 100)) + 1
         elif a['score'] < 0:
-            a['score'] = 0
+            a['score'] = 1
     
-    # choose 100 random anomalies
-    return random.sample(anomalies, 100)
+    # choose 25 random anomalies
+    return random.sample(anomalies, 25)

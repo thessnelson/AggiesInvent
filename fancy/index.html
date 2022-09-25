@@ -61,7 +61,13 @@ Color palette
 
 <script>
   var anomalies = [];
-  fetch('http://127.0.0.01:8000/api/v1/data/threat-data/').then((response) => response.json()).then((data) => anomalies = data);
+  fetch('http://127.0.0.01:8000/api/v1/data/threat-data/').then((response) => response.json()).then((data) => {
+    anomalies = data['anomalies'];
+
+    anomalies.sort(function(a, b) {
+      return b['score'] - a['score'];
+    });
+  });
 </script>
 
 <body class="menuclose menuclose-right">
@@ -1026,23 +1032,6 @@ Color palette
               <h5 class="card-title">Tables <small>Datatables</small></h5>
             </div>
             <div class="card-body">
-              <div id="dataTables-example_wrapper" class="dataTables_wrapper  dt-bootstrap4 no-footer">
-                <div class="row">
-                  <div class="col-md-8">
-                    <div class="dataTables_length" id="dataTables-example_length"><label>Show <select
-                          name="dataTables-example_length" aria-controls="dataTables-example"
-                          class="form-control input-sm">
-                          <option value="10">10</option>
-                          <option value="25">25</option>
-                          <option value="50">50</option>
-                          <option value="100">100</option>
-                        </select> entries</label></div>
-                  </div>
-                  <div class="col-md-8 text-right">
-                    <div id="dataTables-example_filter" class="dataTables_filter"><label>Search:<input type="search"
-                          class="form-control input-sm" placeholder="" aria-controls="dataTables-example"></label></div>
-                  </div>
-                </div>
                 <div class="row">
                   <div class="col-md-16">
                     <table class="table  dataTable no-footer dtr-inline" id="dataTables-example" role="grid"
@@ -1059,69 +1048,53 @@ Color palette
                           <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
                             style="width: 58px;" aria-label="status: activate to sort column ascending">Score</th>
                       </thead>
-                      <tbody>
-
+                      <tbody id='table-body'>
                         <tr class="odd" role="row">
-                          <td tabindex="0" class="sorting_1"><img src="images/alert.png" alt="" class="gridpic">Threat1
+                          <td tabindex="0" class="sorting_1"><img src="images/alert.png" alt="" class="gridpic">Loading...
                           </td>
-                          <td>info@user.in</td>
-                          <td class="center">18</td>
-                          <td class="center"><span class="status success">Active</span></td>
-                        </tr>
-                        <tr class="even" role="row">
-                          <td class="sorting_1" tabindex="0"><img src="images/alert.png" alt="" class="gridpic">Threat2
-                          </td>
-                          <td>info@user.in</td>
-                          <td class="center">18</td>
-                          <td class="center"><span class="status danger">Inactive</span></td>
-                        </tr>
-                        <tr class="odd" role="row">
-                          <td class="sorting_1" tabindex="0"><img src="images/alert.png" alt="" class="gridpic">Threat3
-                          </td>
-                          <td>info@user.in</td>
-                          <td class="center">20</td>
-                          <td class="center"><span class="status warning">Inactive</span></td>
-
-                        </tr>
-                        <tr class="even" role="row">
-                          <td tabindex="0" class="sorting_1"><img src="images/alert.png" alt="" class="gridpic">Threat4
-                          </td>
-                          <td>info@user.in</td>
-                          <td class="center">10</td>
-                          <td class="center"><span class="status success">Active</span></td>
-
-                        </tr>
-                        <tr class="odd" role="row">
-                          <td class="sorting_1" tabindex="0"><img src="images/alert.png" alt="" class="gridpic">Threat5
-                          </td>
-                          <td>info@user.in</td>
-                          <td class="center">17</td>
-                          <td class="center"><span class="status danger">Inactive</span></td>
-
+                          <td>Loading...</td>
+                          <td class="center">Loading...</td>
+                          <td class="center"><span class="status success">Loading...</span></td>
                         </tr>
                       </tbody>
+                      <script type="text/javascript">
+                        function populateTable() {
+                          if (anomalies.length == 0) {
+                            setTimeout(populateTable, 1000)
+                            return;
+                          }
+
+                          const table = document.getElementById('table-body');
+
+                          table.deleteRow(0);
+                          anomalies.forEach((a, index) => {
+                            let row = table.insertRow();
+
+                            row.style.backgroundColor =  `rgb(${a.score*25}, ${(10-a.score)*25}, 0)`;
+
+                            let name = row.insertCell(0)
+                            name.innerHTML = '<td tabindex=0 class="sorting_1"><img src="images/alert.png" alt="" class="gridpic">Threat' + index + '</td>';
+                            name.style.color = 'white';
+
+                            let flow_duration = row.insertCell(1);
+                            flow_duration.innerHTML = a.flow_duration;
+                            flow_duration.style.color = 'white';
+
+                            let packets = row.insertCell(2);
+                            packets.innerHTML = a.total_fwd_packets + a.total_bwd_packets;
+                            packets.style.color = 'white';
+
+                            let score = row.insertCell(3);
+                            score.innerHTML = a.score;
+                            score.style.color = 'white';
+                          });
+                        }
+
+                        populateTable();
+                      </script>
                     </table>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-9">
-                    <div class="dataTables_paginate paging_full_numbers" id="dataTables-example_paginate">
-                      <ul class="pagination pull-right">
-                        <li class="paginate_button page-item previous disabled" id="dataTables-example_previous"><a
-                            href="#" aria-controls="dataTables-example" data-dt-idx="1" tabindex="0"
-                            class="page-link">&lt;</a></li>
-                        <li class="paginate_button page-item active"><a href="#" aria-controls="dataTables-example"
-                            data-dt-idx="2" tabindex="0" class="page-link">1</a></li>
-                        <li class="paginate_button page-item "><a href="#" aria-controls="dataTables-example"
-                            data-dt-idx="3" tabindex="0" class="page-link">2</a></li>
-                        <li class="paginate_button page-item "><a href="#" aria-controls="dataTables-example"
-                            data-dt-idx="4" tabindex="0" class="page-link">3</a></li>
-                        <li class="paginate_button page-item last" id="dataTables-example_last"><a href="#"
-                            aria-controls="dataTables-example" data-dt-idx="6" tabindex="0"
-                            class="page-link">&gt;&gt;</a></li>
-                      </ul>
-                    </div>
-                  </div>
                 </div>
               </div>
               <!-- /.table-responsive -->
