@@ -7,7 +7,12 @@
 
 /* Dashboard chart combo line and bar */
           
-"use strict";    
+"use strict"; 
+
+function randomScalingFactor() {
+	return Math.round(Math.random() * 100);
+}
+
         var color = Chart.helpers.color;
         var barChartData = {
             labels: ["January", "February", "March", "April", "May", "June","July"],
@@ -148,7 +153,7 @@
                 })
             });
             window.myBar.update();             
-         }, 3000);
+         }, 300000000);
       
 
 /* map global */
